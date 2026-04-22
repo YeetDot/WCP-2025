@@ -22,7 +22,8 @@ public:
 
     double GetVelocity();
     double GetPosition();
-    void SetPID(double p, double i = 0, double d = 0, double ff = 0, int slot = 0);
+    void SetPID(double p, double i = 0, double d = 0, int slot = 0);
+    void SetFF(double ff, int slot = 0);
     void SetReference(double reference, rev::spark::SparkLowLevel::ControlType controlType);
 
     rev::spark::FeedbackSensor GetEncoderType();

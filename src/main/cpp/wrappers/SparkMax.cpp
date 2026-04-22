@@ -58,22 +58,41 @@ double SparkMax::GetPosition()
     return 0.0;
 }
 
-void SparkMax::SetPID(double p, double i, double d, double ff, int slot)
+void SparkMax::SetPID(double p, double i, double d, int slot)
 {
     switch (slot)
     {
     case 1:
-        m_config.closedLoop.Pidf(p, i, d, ff, rev::spark::kSlot1);
+        m_config.closedLoop.Pid(p, i, d, rev::spark::kSlot1);
         break;
     case 2:
-        m_config.closedLoop.Pidf(p, i, d, ff, rev::spark::kSlot2);
+        m_config.closedLoop.Pid(p, i, d, rev::spark::kSlot2);
         break;
     case 3:
-        m_config.closedLoop.Pidf(p, i, d, ff, rev::spark::kSlot3);
+        m_config.closedLoop.Pid(p, i, d, rev::spark::kSlot3);
         break;
     
     default:
-        m_config.closedLoop.Pidf(p, i, d, ff, rev::spark::kSlot0);
+        m_config.closedLoop.Pid(p, i, d, rev::spark::kSlot0);
+        break;
+    }
+}
+
+void SparkMax::SetFF(double ff, int slot)
+{
+    switch (slot)
+    {
+    case 1:
+        m_config.closedLoop.Apply(rev::spark::FeedForwardConfig().kV(ff, rev::spark::kSlot1));
+        break;
+    case 2:
+        m_config.closedLoop.Apply(rev::spark::FeedForwardConfig().kV(ff, rev::spark::kSlot2));
+        break;
+    case 3:
+        m_config.closedLoop.Apply(rev::spark::FeedForwardConfig().kV(ff, rev::spark::kSlot3));
+        break;
+    default:
+        m_config.closedLoop.Apply(rev::spark::FeedForwardConfig().kV(ff, rev::spark::kSlot0));
         break;
     }
 }
